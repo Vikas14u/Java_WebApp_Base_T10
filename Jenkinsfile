@@ -32,7 +32,7 @@ pipeline {
 			sh '''
 			scp -o UserKnownHostsFile=/var/lib/jenkins/.ssh/known_hosts \
 			target/BaseWebApp-T10-1.0-SNAPSHOT.war \
-			ubuntu@172.31.39.251:/tmp/
+			ubuntu@172.31.39.251:/var/lib/tomcat10/webapps/
 			'''
 }
 
