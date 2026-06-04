@@ -27,13 +27,15 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 
-                 sshagent(credentials: ['tomcat-ssh']) {
-                 sh '''
-                scp -o UserKnownHostsFile=/home/ubuntu/.ssh/known_hosts_jenkins \
-                 target/BaseWebApp-T10-1.0-SNAPSHOT.war \
-                 ubuntu@172.31.39.251:/tmp/
-                    '''
+                 
+			sshagent(credentials: ['tomcat-ssh']) {
+			sh '''
+			scp -o UserKnownHostsFile=/var/lib/jenkins/.ssh/known_hosts \
+			target/BaseWebApp-T10-1.0-SNAPSHOT.war \
+			ubuntu@172.31.39.251:/tmp/
+			'''
 }
+
 
             }
         }
