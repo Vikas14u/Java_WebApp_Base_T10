@@ -26,19 +26,15 @@ pipeline {
 
         stage('Deploy to Tomcat') {
             steps {
-                sshagent(credentials: ['tomcat-ssh']) {
-				    withEnv(["HOME=/home/ubuntu"]) {
-                    sh """
-                    scp target/${WAR_NAME} ${TOMCAT_USER}@${TOMCAT_HOST}:/tmp/
-                    ssh ${TOMCAT_USER}@${TOMCAT_HOST} '
-                        sudo systemctl stop tomcat10
-                        sudo rm -rf ${TOMCAT_WEBAPPS}/${WAR_NAME}
-                        sudo mv /tmp/${WAR_NAME} ${TOMCAT_WEBAPPS}/
-                        sudo systemctl start tomcat10
-                    '
-                    """
-                }
-				}
+                
+                 sshagent(credentials: ['tomcat-ssh']) {
+                 sh '''
+                scp -o UserKnownHostsFile=/home/ubuntu/.ssh/known_hosts_jenkins \
+                 target/BaseWebApp-T10-1.0-SNAPSHOT.war \
+                 ubuntu@172.31.39.251:/tmp/
+                    '''
+}
+
             }
         }
     }
