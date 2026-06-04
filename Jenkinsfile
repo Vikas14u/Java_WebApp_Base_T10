@@ -27,6 +27,7 @@ pipeline {
         stage('Deploy to Tomcat') {
             steps {
                 sshagent(credentials: ['tomcat-ssh']) {
+				    withEnv(["HOME=/home/ubuntu"]) {
                     sh """
                     scp target/${WAR_NAME} ${TOMCAT_USER}@${TOMCAT_HOST}:/tmp/
                     ssh ${TOMCAT_USER}@${TOMCAT_HOST} '
@@ -37,6 +38,7 @@ pipeline {
                     '
                     """
                 }
+				}
             }
         }
     }
